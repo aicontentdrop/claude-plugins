@@ -1,0 +1,28 @@
+{
+  "name": "aicontentdrop",
+  "description": "Plugins from AI Content Drop, the AI video studio: the studio plugin that bundles the connector, slash commands and agent skills, and the advisory plugin that plans video, image and short-drama work as text.",
+  "owner": {
+    "name": "AI Content Drop",
+    "email": "support@aicontentdrop.com",
+    "url": "https://aicontentdrop.com"
+  },
+  "plugins": [
+    {
+      "name": "aicontentdrop-studio",
+      "source": "./plugins/aicontentdrop-studio",
+      "description": "Make AI video, images, finished ads, boards, competitor research and short drama through the AI Content Drop connector, with every paid step quoted first and approved by you. Bundles the connector, eight slash commands and the agent skills.",
+      "category": "media",
+      "tags": ["ai-video", "image-generation", "video-ads", "video-agent", "short-drama", "mcp"]
+    },
+    {
+      "name": "aicontentdrop",
+      "source": {
+        "source": "github",
+        "repo": "aicontentdrop/claude-plugin"
+      },
+      "description": "Plan AI video, image and short-drama work as text: pick the model, write the prompt, price the job, outline the episode. No connector; generation happens on aicontentdrop.com after you follow a link.",
+      "category": "media",
+      "tags": ["ai-video", "prompt-writing", "model-selection", "short-drama"]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "aicontentdrop": {
+      "type": "http",
+      "url": "https://aicontentdrop.com/mcp"
+    }
+  }
+}

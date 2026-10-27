@@ -1,0 +1,18 @@
+---
+description: Make a finished, captioned video ad through the studio tools, from brief and storyboard to quote, approval, render and poll
+argument-hint: <brand, product, two or three value props, call to action; optionally format, duration, a product image URL and a presenter>
+---
+
+Make an ad for: $ARGUMENTS
+
+Use the bundled `marketing-studio-ad` skill and the AI Content Drop connector's tools `list_ad_formats`, `list_ugc_avatars`, `list_brand_profiles`, `import_brand_profile`, `import_asset`, `write_ad_storyboard`, `estimate_ad_cost`, `generate_ad` and `get_ad_job`, and, when a reference has to be made first, `generate_image` or `generate_avatar`. Do not assemble an ad out of `generate_video` calls instead.
+
+Sign-in. `list_ad_formats`, `list_ugc_avatars` and `estimate_ad_cost` need no account; the rest do. When a tool answers that it needs an account, sign in through the connector (in Claude Code, `/mcp`; on claude.ai and in Claude Desktop, the plugin's Connectors tab), then call it again. Never ask for or pass an API key.
+
+1. Brief first: the brand (`list_brand_profiles` for a saved one, or `import_brand_profile` from a website URL), two or three value props in the customer's words, the call to action, a format from `list_ad_formats` (never from memory), and a duration inside the format's range. Read the brief back in four lines before going on.
+2. Assets by URL: a product image or presenter photo that is not on the platform goes through `import_asset` first. `generate_ad` refuses without both `avatar_url` and `product_image_url`. Without a product image, make one first (a quoted `generate_image`, under the money rule) or import one; without a presenter, pick one from `list_ugc_avatars` or make one with a quoted `generate_avatar`. Pass the resulting URLs, and set `needs_product_gen` / `needs_avatar_gen` only for a reference generated in this run, so the quote carries that line. For a photo of a real person as the presenter, ask whether they have the right to use that likeness in an ad and go on only after a yes; `generate_ad` has no consent field, so the yes is recorded in the conversation, never assumed. (Only `generate_ugc_video` takes `image_rights_consent`.)
+3. `write_ad_storyboard` with the brief. It costs nothing. Show the shot list and adjust the brief until the person is happy with it.
+4. `estimate_ad_cost` with exactly the fields you will send to `generate_ad`: the storyboard or brief, `quality`, `model_tier`, `persona_mode` and the two `needs_` flags. It returns `credits_total`, the `lines` behind it and a `quote_id` valid for 15 minutes.
+5. Money. Say the ceiling and its lines read from the quote, in words, and wait. Call `generate_ad` with that `quote_id` and the same fields only after the person says yes to that number; an unclear answer is not a yes. The quote is an upper bound: credits are charged only when the job succeeds, and only what it used. A lapsed or mismatched quote is refused; quote again and ask again only if the number changed.
+6. Poll `get_ad_job` with the `job_id` every 15 seconds. Report `stage` and `percent` when they change, not every poll. Stop after 15 minutes and hand back the `job_id`; never start a second job because the first is slow.
+7. Hand back `video_url`, `storyboard_sheet_url`, the format and duration used, `credits_used`, and the brief as it was sent. On `ENTITLEMENT_REQUIRED`, give the `info_url` the refusal carries (https://aicontentdrop.com/plans) and nothing else about plans.
