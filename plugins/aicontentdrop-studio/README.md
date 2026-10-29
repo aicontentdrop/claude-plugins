@@ -124,6 +124,12 @@ For scripts, create an API key at <https://aicontentdrop.com/settings/integratio
 - Credits are charged only when a step succeeds.
 - Most tools that need an account are listed before sign-in and ask for it on first use; the drop and drama tools are listed only once you have signed in, and the commands say what to do when a tool is missing.
 
+## What changed in 1.1.0
+
+- The board command no longer asks Claude to group cards through a tool that only the board view can see, so the call it used to make can no longer fail. Claude adds frames with `add_frame` and leaves moving, arranging and grouping to the person on the board; a test now fails the build if any command names a tool a model cannot see.
+- The drop and recreate commands carry the video agent's corrections: a turn longer than about 40 seconds comes back still working and must not be sent again; assets go in `attachments`; a lapsed quote is re-priced by the engine and read back from the run; what each verdict means; a reference read from a file link, the refusals it can answer with, and the first reply that comes back when a drop starts from a reference.
+- The ad command quotes a generated presenter with `estimate_ad_cost` and `kind: "avatar"` and says what to do on a content or asset refusal; the drama command says how long a draft takes; the research command never presents sample rows as real ads.
+
 ## Source
 
 The skills under `skills/` are exported byte for byte from the [`aicontentdrop`](https://www.npmjs.com/package/aicontentdrop) package by `scripts/build-claude-plugin-studio.mjs`, which also assembles the marketplace copy, and a test fails the build if any copy drifts. See [SETUP.md](./SETUP.md) for a local install and the first commands to try. MIT licensed. Support: <support@aicontentdrop.com>.

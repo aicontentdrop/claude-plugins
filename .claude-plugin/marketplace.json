@@ -17,8 +17,9 @@
     {
       "name": "aicontentdrop",
       "source": {
-        "source": "github",
-        "repo": "aicontentdrop/claude-plugin"
+        "source": "url",
+        "url": "https://github.com/aicontentdrop/claude-plugin.git",
+        "ref": "main"
       },
       "description": "Plan AI video, image and short-drama work as text: pick the model, write the prompt, price the job, outline the episode. No connector; generation happens on aicontentdrop.com after you follow a link.",
       "category": "media",

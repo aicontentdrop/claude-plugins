@@ -14,10 +14,13 @@ A board is the Visual Canvas on AI Content Drop: cards on an infinite surface,
 shared between the person's browser and every agent on the account. The board
 tools are `list_canvases`, `create_canvas`, `get_canvas`, `rename_canvas`,
 `get_canvas_link`, `add_text_card`, `add_media_card`, `add_frame`,
-`add_generation_card`, `connect_cards`, `update_card`, `move_cards`,
-`arrange_cards`, `group_cards`, `run_generation_card` and `refresh_canvas`. They appear on
-`tools/list` where the board surface is enabled and every one of them needs a
-sign-in, because a board is account data. If they are absent, say so and stop.
+`add_generation_card`, `connect_cards`, `update_card`, `run_generation_card`
+and `refresh_canvas`. They appear on `tools/list` where the board surface is
+enabled and every one of them needs a sign-in, because a board is account
+data. If they are absent, say so and stop. Three more tools, `move_cards`,
+`arrange_cards` and `group_cards`, are marked for the board view only
+(`_meta.ui.visibility: ["app"]`): a host that honours that never shows them
+to you, so do not look for them or call them.
 
 Exactly one of them spends credits: `run_generation_card`. Everything else
 costs nothing, however many cards you add.
@@ -41,10 +44,11 @@ Cards come in four kinds you can add:
 | `add_frame` | frame | A labelled region such as Week 1 or Hooks |
 
 Omit `position`. The server places every new card on a grid and repairs
-overlap; a model that moves cards by hand spends turns on pixels. `group_cards`
-wraps related cards in a labelled frame, which is the one layout call worth
-making. `move_cards` and `arrange_cards` exist for the board view's drag and
-multi-select, not for you.
+overlap; a model that moves cards by hand spends turns on pixels. A frame is a
+card of its own and encloses nothing by itself: to put cards under a label,
+add the frame and name the label in each card's title, and leave the grouping
+to the person on the board page, where the board view moves, arranges and
+groups cards through the tools only it can see.
 
 Every mutating tool returns the whole board. Read the next step from that
 answer, not from what you remember adding.
